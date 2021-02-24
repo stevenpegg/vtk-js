@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.83% </span>
+                <span class="strong">72.99% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>394/541</span>
+                <span class='fraction'>400/548</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.17% </span>
+                <span class="strong">74.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>382/515</span>
+                <span class='fraction'>388/522</span>
             </div>
         
             
@@ -1171,7 +1171,15 @@
 <a name='L1112'></a><a href='#L1112'>1112</a>
 <a name='L1113'></a><a href='#L1113'>1113</a>
 <a name='L1114'></a><a href='#L1114'>1114</a>
-<a name='L1115'></a><a href='#L1115'>1115</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1115'></a><a href='#L1115'>1115</a>
+<a name='L1116'></a><a href='#L1116'>1116</a>
+<a name='L1117'></a><a href='#L1117'>1117</a>
+<a name='L1118'></a><a href='#L1118'>1118</a>
+<a name='L1119'></a><a href='#L1119'>1119</a>
+<a name='L1120'></a><a href='#L1120'>1120</a>
+<a name='L1121'></a><a href='#L1121'>1121</a>
+<a name='L1122'></a><a href='#L1122'>1122</a>
+<a name='L1123'></a><a href='#L1123'>1123</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1272,6 +1280,7 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">37x</span>
@@ -1306,6 +1315,7 @@
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
@@ -1857,6 +1867,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">19x</span>
@@ -1864,6 +1875,9 @@
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
@@ -1927,6 +1941,8 @@
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">19x</span>
@@ -2385,7 +2401,8 @@ function vtkImageReslice(publicAPI, model) {
 &nbsp;
   publicAPI.setResliceAxes = (resliceAxes) =&gt; {
     if (!model.resliceAxes) {
-      model.resliceAxes = mat4.create();
+      model.resliceAxes = new Float64Array(16);
+      mat4.identity(model.resliceAxes);
     }
 &nbsp;
     if (!mat4.exactEquals(model.resliceAxes, resliceAxes)) {
@@ -2420,11 +2437,12 @@ function vtkImageReslice(publicAPI, model) {
     const outWholeExt = [0, 0, 0, 0, 0, 0];
     const outDims = [0, 0, 0];
 &nbsp;
-    let matrix = mat4.create();
+    let matrix = new Float64Array(16);
+    mat4.identity(matrix);
     <span class="missing-if-branch" title="else path not taken" >E</span>if (model.resliceAxes) {
       matrix = model.resliceAxes;
     }
-    const imatrix = mat4.create();
+    const imatrix = new Float64Array(16);
     mat4.invert(imatrix, matrix);
 &nbsp;
     const inCenter = [
@@ -2970,7 +2988,8 @@ function vtkImageReslice(publicAPI, model) {
   publicAPI.getIndexMatrix = (input, output) =&gt; {
     // first verify that we have to update the matrix
     if (indexMatrix === null) {
-      indexMatrix = mat4.create();
+      indexMatrix = new Float64Array(16);
+      mat4.identity(indexMatrix);
     }
 &nbsp;
     const inOrigin = input.getOrigin();
@@ -2978,9 +2997,12 @@ function vtkImageReslice(publicAPI, model) {
     const outOrigin = output.getOrigin();
     const outSpacing = output.getSpacing();
 &nbsp;
-    const transform = mat4.create();
-    const inMatrix = mat4.create();
-    const outMatrix = mat4.create();
+    const transform = new Float64Array(16);
+    mat4.identity(transform);
+    const inMatrix = new Float64Array(16);
+    mat4.identity(inMatrix);
+    const outMatrix = new Float64Array(16);
+    mat4.identity(outMatrix);
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (optimizedTransform) {
 <span class="cstat-no" title="statement not covered" >      optimizedTransform = null;</span>
@@ -3038,9 +3060,11 @@ function vtkImageReslice(publicAPI, model) {
     const dims = input.getDimensions();
     const inWholeExt = [0, dims[0] - 1, 0, dims[1] - 1, 0, dims[2] - 1];
 &nbsp;
-    const matrix = mat4.create();
+    const matrix = new Float64Array(16);
     <span class="missing-if-branch" title="else path not taken" >E</span>if (model.resliceAxes) {
       mat4.invert(matrix, model.resliceAxes);
+    } else {
+<span class="cstat-no" title="statement not covered" >      mat4.identity(matrix);</span>
     }
 &nbsp;
     const bounds = [
@@ -3406,7 +3430,7 @@ export default { newInstance, extend };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Feb 24 2021 00:21:51 GMT+0000 (Coordinated Universal Time)
+                at Wed Feb 24 2021 20:06:36 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>
