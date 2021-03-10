@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.5% </span>
+                <span class="strong">60.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>238/387</span>
+                <span class='fraction'>235/388</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.35% </span>
+                <span class="strong">66.13% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>43/62</span>
+                <span class='fraction'>41/62</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.84% </span>
+                <span class="strong">60.89% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>235/380</span>
+                <span class='fraction'>232/381</span>
             </div>
         
             
@@ -1309,7 +1309,15 @@
 <a name='L1250'></a><a href='#L1250'>1250</a>
 <a name='L1251'></a><a href='#L1251'>1251</a>
 <a name='L1252'></a><a href='#L1252'>1252</a>
-<a name='L1253'></a><a href='#L1253'>1253</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1253'></a><a href='#L1253'>1253</a>
+<a name='L1254'></a><a href='#L1254'>1254</a>
+<a name='L1255'></a><a href='#L1255'>1255</a>
+<a name='L1256'></a><a href='#L1256'>1256</a>
+<a name='L1257'></a><a href='#L1257'>1257</a>
+<a name='L1258'></a><a href='#L1258'>1258</a>
+<a name='L1259'></a><a href='#L1259'>1259</a>
+<a name='L1260'></a><a href='#L1260'>1260</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1681,7 +1689,7 @@
 <span class="cline-any cline-yes">157x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1803,9 +1811,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">158x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">158x</span>
@@ -2557,11 +2565,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import macro from 'vtk.js/Sources/macro';
+import { registerViewConstructor } from 'vtk.js/Sources/Rendering/Core/RenderWindow';
 import vtkForwardPass from 'vtk.js/Sources/Rendering/OpenGL/ForwardPass';
 import vtkOpenGLViewNodeFactory from 'vtk.js/Sources/Rendering/OpenGL/ViewNodeFactory';
 import vtkRenderPass from 'vtk.js/Sources/Rendering/SceneGraph/RenderPass';
@@ -2932,8 +2947,8 @@ function vtkOpenGLRenderWindow(publicAPI, model) {
     // prevent default context lost handler
     model.canvas.addEventListener(
       'webglcontextlost',
-      (event) =&gt; {
-        event.preventDefault();
+<span class="fstat-no" title="function not covered" >      (e</span>vent) =&gt; {
+<span class="cstat-no" title="statement not covered" >        event.preventDefault();</span>
       },
       false
     );
@@ -3054,10 +3069,10 @@ function vtkOpenGLRenderWindow(publicAPI, model) {
 <span class="cstat-no" title="statement not covered" >    model.vrDisplay.submitFrame();</span>
   };
 &nbsp;
-  publicAPI.restoreContext = () =&gt; {
-    const rp = vtkRenderPass.newInstance();
-    rp.setCurrentOperation('Release');
-    rp.traverse(publicAPI, null);
+  publicAPI.restoreContext = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+    const rp = <span class="cstat-no" title="statement not covered" >vtkRenderPass.newInstance();</span>
+<span class="cstat-no" title="statement not covered" >    rp.setCurrentOperation('Release');</span>
+<span class="cstat-no" title="statement not covered" >    rp.traverse(publicAPI, null);</span>
   };
 &nbsp;
   publicAPI.activateTexture = (texture) =&gt; {
@@ -3806,6 +3821,12 @@ export function extend(publicAPI, model, initialValues = <span class="branch-0 c
 export const newInstance = macro.newInstance(extend, 'vtkOpenGLRenderWindow');
 &nbsp;
 // ----------------------------------------------------------------------------
+// Register API specific RenderWindow implementation
+// ----------------------------------------------------------------------------
+&nbsp;
+registerViewConstructor('WebGL', newInstance);
+&nbsp;
+// ----------------------------------------------------------------------------
 &nbsp;
 export default {
   newInstance,
@@ -3820,7 +3841,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Feb 25 2021 15:36:55 GMT+0000 (Coordinated Universal Time)
+                at Wed Mar 10 2021 21:41:17 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>

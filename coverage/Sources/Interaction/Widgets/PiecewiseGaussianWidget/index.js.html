@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.15% </span>
+                <span class="strong">8.09% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>45/552</span>
+                <span class='fraction'>45/556</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">3.13% </span>
+                <span class="strong">3.08% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/64</span>
+                <span class='fraction'>2/65</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.1% </span>
+                <span class="strong">8.05% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>43/531</span>
+                <span class='fraction'>43/534</span>
             </div>
         
             
@@ -1338,7 +1338,10 @@
 <a name='L1279'></a><a href='#L1279'>1279</a>
 <a name='L1280'></a><a href='#L1280'>1280</a>
 <a name='L1281'></a><a href='#L1281'>1281</a>
-<a name='L1282'></a><a href='#L1282'>1282</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1282'></a><a href='#L1282'>1282</a>
+<a name='L1283'></a><a href='#L1283'>1283</a>
+<a name='L1284'></a><a href='#L1284'>1284</a>
+<a name='L1285'></a><a href='#L1285'>1285</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1861,6 +1864,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1878,6 +1883,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -3135,16 +3141,18 @@ function <span class="fstat-no" title="function not covered" >vtkPiecewiseGaussi
     let arrayStride = <span class="cstat-no" title="statement not covered" >Math.floor(array.length / maxNumberOfWorkers) || 1;</span>
 <span class="cstat-no" title="statement not covered" >    arrayStride += arrayStride % numberOfComponents;</span>
     let arrayIndex = <span class="cstat-no" title="statement not covered" >0;</span>
+    const workerChunks = <span class="cstat-no" title="statement not covered" >[];</span>
     const workers = <span class="cstat-no" title="statement not covered" >[];</span>
 <span class="cstat-no" title="statement not covered" >    while (arrayIndex &lt; array.length) {</span>
       const worker = <span class="cstat-no" title="statement not covered" >new ComputeHistogramWorker();</span>
+<span class="cstat-no" title="statement not covered" >      workers.push(worker);</span>
       const workerPromise = <span class="cstat-no" title="statement not covered" >new WebworkerPromise(worker);</span>
       const arrayStart = <span class="cstat-no" title="statement not covered" >arrayIndex;</span>
       const arrayEnd = <span class="cstat-no" title="statement not covered" >Math.min(arrayIndex + arrayStride, array.length - 1);</span>
       const subArray = <span class="cstat-no" title="statement not covered" >new array.constructor(</span>
         array.slice(arrayStart, arrayEnd + 1)
       );
-<span class="cstat-no" title="statement not covered" >      workers.push(</span>
+<span class="cstat-no" title="statement not covered" >      workerChunks.push(</span>
         workerPromise.postMessage(
           {
             array: subArray,
@@ -3159,10 +3167,11 @@ function <span class="fstat-no" title="function not covered" >vtkPiecewiseGaussi
       );
 <span class="cstat-no" title="statement not covered" >      arrayIndex += arrayStride;</span>
     }
-<span class="cstat-no" title="statement not covered" >    Promise.all(workers).then(<span class="fstat-no" title="function not covered" >(w</span>orkerResults) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    Promise.all(workerChunks).then(<span class="fstat-no" title="function not covered" >(s</span>ubHistograms) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      workers.forEach(<span class="fstat-no" title="function not covered" >(w</span>orker) =&gt; <span class="cstat-no" title="statement not covered" >worker.terminate())</span>;</span>
 <span class="cstat-no" title="statement not covered" >      model.histogram = new Float32Array(model.numberOfBins);</span>
 <span class="cstat-no" title="statement not covered" >      model.histogram.fill(0);</span>
-<span class="cstat-no" title="statement not covered" >      workerResults.forEach(<span class="fstat-no" title="function not covered" >(s</span>ubHistogram) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      subHistograms.forEach(<span class="fstat-no" title="function not covered" >(s</span>ubHistogram) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        for (let i = <span class="cstat-no" title="statement not covered" >0,</span> len = <span class="cstat-no" title="statement not covered" >subHistogram.length;</span> i &lt; len; ++i) {</span>
 <span class="cstat-no" title="statement not covered" >          model.histogram[i] += subHistogram[i];</span>
         }
@@ -3907,7 +3916,7 @@ export default { newInstance, extend, ...STATIC };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Feb 25 2021 15:36:55 GMT+0000 (Coordinated Universal Time)
+                at Wed Mar 10 2021 21:41:17 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>

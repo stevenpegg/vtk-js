@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.62% </span>
+                <span class="strong">76.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>177/231</span>
+                <span class='fraction'>179/234</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.16% </span>
+                <span class="strong">58% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>57/98</span>
+                <span class='fraction'>58/100</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.17% </span>
+                <span class="strong">79.36% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>171/216</span>
+                <span class='fraction'>173/218</span>
             </div>
         
             
@@ -637,7 +637,11 @@
 <a name='L578'></a><a href='#L578'>578</a>
 <a name='L579'></a><a href='#L579'>579</a>
 <a name='L580'></a><a href='#L580'>580</a>
-<a name='L581'></a><a href='#L581'>581</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L581'></a><a href='#L581'>581</a>
+<a name='L582'></a><a href='#L582'>582</a>
+<a name='L583'></a><a href='#L583'>583</a>
+<a name='L584'></a><a href='#L584'>584</a>
+<a name='L585'></a><a href='#L585'>585</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -777,6 +781,10 @@
 <span class="cline-any cline-yes">763x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">139x</span>
+<span class="cline-any cline-yes">139x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">139x</span>
 <span class="cline-any cline-yes">139x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -788,8 +796,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">139x</span>
 <span class="cline-any cline-yes">126x</span>
-<span class="cline-any cline-yes">126x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
@@ -800,6 +806,8 @@
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">139x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1092,12 +1100,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">695x</span>
-<span class="cline-any cline-yes">5731x</span>
-<span class="cline-any cline-yes">5731x</span>
-<span class="cline-any cline-yes">5731x</span>
-<span class="cline-any cline-yes">5731x</span>
+<span class="cline-any cline-yes">6009x</span>
+<span class="cline-any cline-yes">6009x</span>
+<span class="cline-any cline-yes">6009x</span>
+<span class="cline-any cline-yes">6009x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5731x</span>
+<span class="cline-any cline-yes">6009x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">695x</span>
@@ -1357,6 +1365,10 @@ function vtkMapper(publicAPI, model) {
       return;
     }
 &nbsp;
+    // we want to only recompute when something has changed
+    const toString = `${publicAPI.getMTime()}${scalars.getMTime()}${alpha}`;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (model.colorBuildString === toString) <span class="cstat-no" title="statement not covered" >return;</span>
+&nbsp;
     <span class="missing-if-branch" title="else path not taken" >E</span>if (!model.useLookupTableScalarRange) {
       publicAPI
         .getLookupTable()
@@ -1368,18 +1380,18 @@ function vtkMapper(publicAPI, model) {
     // Only point data can use both texture and vertex coloring.
     if (publicAPI.canUseTextureMapForColoring(input)) {
       publicAPI.mapScalarsToTexture(scalars, alpha);
-      return;
-    }
+    } else {
+      model.colorCoordinates = null;
+      model.colorTextureMap = null;
 &nbsp;
-    model.colorCoordinates = null;
-    model.colorTextureMap = null;
-&nbsp;
-    const lut = publicAPI.getLookupTable();
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (lut) {
-      // Ensure that the lookup table is built
-      lut.build();
-      model.colorMapColors = lut.mapScalars(scalars, model.colorMode, -1);
+      const lut = publicAPI.getLookupTable();
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (lut) {
+        // Ensure that the lookup table is built
+        lut.build();
+        model.colorMapColors = lut.mapScalars(scalars, model.colorMode, -1);
+      }
     }
+    model.colorBuildString = `${publicAPI.getMTime()}${scalars.getMTime()}${alpha}`;
   };
 &nbsp;
   //-----------------------------------------------------------------------------
@@ -1804,7 +1816,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Feb 25 2021 15:36:55 GMT+0000 (Coordinated Universal Time)
+                at Wed Mar 10 2021 21:41:17 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>
