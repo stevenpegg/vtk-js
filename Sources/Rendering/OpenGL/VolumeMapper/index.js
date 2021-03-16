@@ -1251,7 +1251,9 @@ function vtkOpenGLVolumeMapper(publicAPI, model) {
     if (!model.jitterTexture.getHandle()) {
       const oTable = new Uint8Array(32 * 32);
       for (let i = 0; i < 32 * 32; ++i) {
-        oTable[i] = 255.0 * Math.random();
+        // TODO: Death to the jitter bug!
+        // oTable[i] = 255.0 * Math.random();
+        oTable[i] = 0.0; // TODO: Death to the jitter bug 255.0 * Math.random();
       }
       model.jitterTexture.setMinificationFilter(Filter.LINEAR);
       model.jitterTexture.setMagnificationFilter(Filter.LINEAR);
